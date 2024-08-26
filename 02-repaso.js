@@ -72,7 +72,7 @@ const datosArreglo = () => {
             console.log(`${j} = ${A[i][j]}`)   
             j++         
         }
-        j++
+        i++
     }
 }
 datosArreglo()
