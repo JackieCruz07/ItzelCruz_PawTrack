@@ -1,0 +1,9 @@
+const prompt=requiere('prompt-sync')()
+
+let numero1
+let numero2
+
+numero1=prompt("Ingrese el numero 1:")
+numero2=prompt("Ingrese el numero 2:")
+
+console.log(numero1*numero2)
