@@ -11,7 +11,7 @@ const persona2={
 function datosPersona(nombre, edad) {
     return{
         nombre:nombre,
-        edad:eddad,
+        edad:edad,
         active:true
     }
     
