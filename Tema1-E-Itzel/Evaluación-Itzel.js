@@ -1,5 +1,5 @@
 const prompt = require('prompt-sync')();
-
+/* 
 class Empleado {
     constructor(nombre, apellido, rfc, dirección, telefono, sueldo) {
       this._nombre = nombre;
@@ -178,4 +178,72 @@ function main() {
     }
 }
 
-main();
+main(); */
+
+//Evaluación Dany
+
+porc=0.15
+class Cooperativa {
+  constructor(nombre, apellido, rfc, dirección, telefono, hrstra) {
+    this._nombre = nombre;
+    this._apellido = apellido;
+    this._rfc = rfc;
+    this._dirección = dirección;
+    this._telefono = telefono;
+    this._cosxhra = cosxhra;
+    this._hrstra = hrstra
+    this._sueldo = sueldo;
+    this._agregarEm=[];
+  }
+
+  //get y set
+  agregar(){let tam=parseInt(prompt("Cuantos empleados desea dar de alta?"))
+    for(let i=0;i<tam;i++){
+      this._nombre=prompt("Ingrese el nombre del empleado:")
+      this._hrstra=parseInt(prompt("Ingrese las horas trabajadas:"))
+      this._cosxhra=parseFloat(prompt("Ingrese el costo por hora:"))
+
+    }
+
+    let empleado={
+      nombre:this._nombre,
+      hrstra:this._hrstra,
+      cosxhra:this._cosxhra,
+      sueldo:this.CalcularSueldo()
+    }
+    this._agregarEm.push(empleado)
+
+  }
+
+  eliminarEmp(){
+    this._agregarEm.length>0?
+    this._agregarEm.pop()
+    :alert("No hay registro que eliminar")
+    
+  }
+  CalcularSueldo(){
+    if(this._hrstra>8){
+      this.sueldo=this._cosxhra*this._hrstra
+      return this.sueldo=this._sueldo+(this._cosxhra*porc*(this._hrstra-8))
+
+    }else{
+      return  this.sueldo=this._cosxhra*this._hrstra
+    }
+  }
+  mostrarEmpleados(){
+    this._agregarEm.length>0
+    ? this._agregarEm.map((emp)=>{
+      console.log(
+        `El Nombre: ${emp.nombre} y tiene un Sueldo: ${emp.sueldo}`
+      )
+
+    }):console.log("No hay empleados que mostrar")
+  }
+
+}
+
+let empleados=new Cooperativa()
+empleados._agregarEm()
+empleados._mostrarEm()
+empleados._eliminarEmp()
+ 
