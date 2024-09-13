@@ -1,5 +1,6 @@
 const prompt = require("prompt-sync")();
 
+// Proyecto
 class CentralVideo {
   constructor() {
     this.clientes = [];
@@ -78,7 +79,7 @@ class CentralVideo {
 
   generarRecibo(renta, monto) {
     return `
-      Recibo de Renta
+      \x1b[33mRecibo de Renta
       ----------------
       Cliente: ${renta.cliente.nombre}
       Película: ${renta.pelicula.titulo}
@@ -99,7 +100,6 @@ class CentralVideo {
   }
 }
 
-// Clase Cliente
 class Cliente {
   constructor(numeroMembresia, nombre, direccion, telefono) {
     this.numeroMembresia = numeroMembresia;
@@ -110,7 +110,6 @@ class Cliente {
   }
 }
 
-// Clase Pelicula
 class Pelicula {
   constructor(numeroPelicula, titulo, clasificacion, tipo) {
     this.numeroPelicula = numeroPelicula;
@@ -121,7 +120,6 @@ class Pelicula {
   }
 }
 
-// Clase Renta
 class Renta {
   constructor(cliente, pelicula, fechaRenta) {
     this.cliente = cliente;
@@ -135,7 +133,11 @@ class Renta {
 function mostrarMenu() {
   console.log(
     "\x1b[36m%s\x1b[0m",
-    "\n--- Menú Principal --- \n[1] Control de Clientes \n[2] Control de Películas \n[3] Control de Rentas \n[4] Salir"
+    "\n--- Menú Principal ---" +
+    "\n[1] Control de Clientes" +
+    "\n[2] Control de Películas" +
+    "\n[3] Control de Rentas" +
+    "\n[4] Salir"
   );
 }
 
@@ -143,7 +145,12 @@ function menuClientes(centralVideo) {
   while (true) {
     console.log(
       "\x1b[36m%s\x1b[0m",
-    "\n--- Control de Clientes --- \n[1] Registrar Clientes \n[2] Consultar Clientes \n[3] Baja de Clientes \n[4] Volver al Menú Principal \n[5] Salir"
+    "\n--- Control de Clientes --- " +
+    "\n[1] Registrar Clientes" +
+    "\n[2] Consultar Clientes" +
+    "\n[3] Baja de Clientes" +
+    "\n[4] Volver al Menú Principal" +
+    "\n[5] Salir"
     );
 
     const opcion = prompt("Seleccione una opción: ");
@@ -180,7 +187,12 @@ function menuPeliculas(centralVideo) {
   while (true) {
     console.log(
       "\x1b[36m%s\x1b[0m",
-    "\n--- Control de Películas --- \n[1] Registrar Películas \n[2] Consultar Películas \n[3] Baja de Películas \n[4] Volver al Menú Principal \n[5] Salir"
+      "\n--- Control de Películas ---" +
+      "\n[1] Registrar Películas" +
+      "\n[2] Consultar Películas" +
+      "\n[3] Baja de Películas" +
+      "\n[4] Volver al Menú Principal" +
+      "\n[5] Salir"
     );
 
     const opcion = prompt("Seleccione una opción: ");
@@ -217,7 +229,11 @@ function menuRentas(centralVideo) {
   while (true) {
      console.log(
       "\x1b[36m%s\x1b[0m",
-    "\n--- Control de Rentas --- \n[1] Rentar Películas \n[2] Consultar Rentas \n[3] Volver al Menú Principal \n[4] Salir"
+      "\n--- Control de Rentas ---" +
+      "\n[1] Rentar Películas" +
+      "\n[2] Consultar Rentas" +
+      "\n[3] Volver al Menú Principal" +
+      "\n[5] Salir"
     );
 
     const opcion = prompt("Seleccione una opción: ");
@@ -262,7 +278,7 @@ function main() {
         menuRentas(centralVideo);
         break;
       case "4":
-        console.log("Gracias por usar el sistema. ¡Hasta luego!");
+        console.log("Chao Chao!");
         return;
       default:
         console.log("Opción no válida.");
