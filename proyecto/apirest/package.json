@@ -1,0 +1,24 @@
+{
+  "name": "proyecto",
+  "version": "1.0.0",
+  "main": "index.js",
+
+  "homepage": "https://JackieCruz07.github.io/EstructuraDeDatos_Itzel-Cruz",
+
+"scripts": {
+  "start": "react-scripts start",
+    "start": "node index.js",
+    "dev":"nodemon index.js",
+    "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cros": "^1.0.1",
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
+}
