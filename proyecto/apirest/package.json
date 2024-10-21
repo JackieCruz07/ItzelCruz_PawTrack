@@ -6,11 +6,10 @@
   "homepage": "https://JackieCruz07.github.io/EstructuraDeDatos_Itzel-Cruz",
 
 "scripts": {
-  "start": "react-scripts start",
     "start": "node index.js",
     "dev":"nodemon index.js",
     "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build"
 
   },
   "author": "",
