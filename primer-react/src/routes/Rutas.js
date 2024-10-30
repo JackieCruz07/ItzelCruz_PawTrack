@@ -1,14 +1,21 @@
 import React from 'react';
 import {Routes,Route} from "react-router-dom";
 //Rutas absolutas
-import ViewCalificaciones from '../components/calificaciones/ViewCalificaciones';
+import Welcome from '../components/inicio/Welcome'
 import Home from '../components/inicio/Home';
+import About from '../components/inicio/About';
+import Catalog from '../components/inicio/Catalog'
+
 function Rutas() {
   return (
     <Routes>
-         <Route path='/' element={<Home/>}/>
-        <Route path='/calificaciones' element={<ViewCalificaciones/>}/>
-    </Routes>
+         <Route path='/' element={<Welcome/>}/>
+        <Route path='/Home' element={<Home/>}/>
+        <Route path='/Catalog' element={<Catalog/>}/>
+        <Route path='/About' element={<About/>}/>
+
+  
+      </Routes>
   )
 }
 export default Rutas
