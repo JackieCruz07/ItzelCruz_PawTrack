@@ -1,21 +1,30 @@
-import React from 'react';
-import {Routes,Route} from "react-router-dom";
-//Rutas absolutas
-import Welcome from '../components/inicio/Welcome'
-import Home from '../components/inicio/Home';
-import About from '../components/inicio/About';
-import Catalog from '../components/inicio/Catalog'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Welcome from "../components/inicio/Welcome";
+import Home from "../components/inicio/Home";
+import About from "../components/inicio/About";
+import Catalog from "../components/inicio/Catalog";
+import ViewMascotas from "../components/Mascotas/ViewMascotas";
+import ViewInformacion from '../components/Gestion/ViewInformacion';
 
-function Rutas() {
+import Informacion from "../bd/Datos";
+
+
+
+function Rutas({ pacientes, setPacientes }) {
   return (
     <Routes>
-         <Route path='/' element={<Welcome/>}/>
-        <Route path='/Home' element={<Home/>}/>
-        <Route path='/Catalog' element={<Catalog/>}/>
-        <Route path='/About' element={<About/>}/>
+      <Route path="/" element={<Welcome />} />
+      <Route path="/Home" element={<Home />} />
+      <Route path="/Catalog" element={<Catalog />} />
+      <Route path="/About" element={<About />} />
+      <Route path="/ViewMascotas" element={<ViewMascotas pacientes={pacientes} />} />
+      <Route path="/ViewInformacion" element={<ViewInformacion setPacientes={setPacientes} pacientes={pacientes} />} />
 
-  
-      </Routes>
-  )
+      <Route path="/ViewCalificaciones" element={<Informacion />} />
+
+    </Routes>
+  );
 }
-export default Rutas
+
+export default Rutas;

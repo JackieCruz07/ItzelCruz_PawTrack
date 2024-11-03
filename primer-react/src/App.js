@@ -1,19 +1,17 @@
+import React, { useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-/* import Otro from "./Otro";
-import Formulariocss from "./Formulariocss";
-import Formularioboot from "./components/Formularioboot"; 
-import Menu from "./components/inicio/Menu";
-*/
-import { BrowserRouter as Router } from "react-router-dom";
-import Rutas from "./routes/Rutas"
+import Rutas from './routes/Rutas';
 
 function App() {
+  const [pacientes, setPacientes] = useState([]);
+
   return (
-<Router>
+    <Router>
       <div className="container-fluid">
-        <Rutas/>
+        <Rutas pacientes={pacientes} setPacientes={setPacientes} />
       </div>
-</Router>
+    </Router>
   );
 }
 
