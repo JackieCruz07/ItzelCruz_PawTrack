@@ -5,19 +5,20 @@ import { Button, Modal } from "react-bootstrap";
 function ViewCalificaciones() {
   const [info, setInfo] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(null);
+  const [editingIndex, setEditingIndex] = useState(null); // Para manejar el índice de edición
   const [values, setValues] = useState({
     matricula: '',
     nombre: "",
     apellidos: '',
-    curp: ''
+    curp: '',
+    imagen: null // Nueva propiedad para almacenar la imagen
   });
 
   const abrirModal = () => setShowModal(true);
   const cerrarModal = () => {
     setShowModal(false);
-    setEditingIndex(null);
-    setValues({ matricula: '', nombre: "", apellidos: '', curp: '' });
+    setEditingIndex(null); // Resetear el índice cuando cerramos el modal
+    setValues({ matricula: '', nombre: "", apellidos: '', curp: '', imagen: null }); // Limpiar el formulario
   };
 
   const obtenerValues = (e) => {
@@ -26,33 +27,43 @@ function ViewCalificaciones() {
     setValues({ ...values, [name]: value });
   };
 
+  const obtenerImagen = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // Crear una URL de la imagen cargada
+      setValues({ ...values, imagen: imageUrl });
+    }
+  };
+
   const guardarInformacion = () => {
     if (editingIndex !== null) {
+      // Si estamos en modo de edición, actualizar el estudiante existente
       Informacion[editingIndex] = values;
       console.log(`Estudiante editado en índice ${editingIndex}`);
     } else {
+      // Si no estamos editando, agregar un nuevo estudiante
       Informacion.push(values);
       console.log("Estudiante agregado");
     }
 
-    mostrarInfo();
-    cerrarModal();
+    mostrarInfo(); // Actualizar la lista de estudiantes
+    cerrarModal(); // Cerrar el modal después de guardar
   };
 
   const mostrarInfo = () => {
-    setInfo([...Informacion]);
+    setInfo([...Informacion]); // Actualiza el estado con una copia del arreglo actual
   };
 
   const eliminarInfo = (index) => {
-    Informacion.splice(index, 1);
+    Informacion.splice(index, 1); // Eliminar el estudiante en el índice especificado
     console.log("Estudiante eliminado en índice", index);
     mostrarInfo();
   };
 
   const editarInfo = (index) => {
-    setEditingIndex(index);
-    setValues(Informacion[index]);
-    abrirModal();
+    setEditingIndex(index); // Establecer el índice del estudiante que estamos editando
+    setValues(Informacion[index]); // Cargar los valores del estudiante en el formulario
+    abrirModal(); // Abrir el modal para editar
   };
 
   useEffect(() => {
@@ -131,6 +142,25 @@ function ViewCalificaciones() {
                   value={values.curp}
                 />
               </div>
+
+              <div className="mb-3">
+                <label htmlFor="imagenInput" className="form-label">
+                  Imagen
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="imagenInput"
+                  onChange={obtenerImagen}
+                />
+              </div>
+              
+              {values.imagen && (
+                <div className="mb-3">
+                  <label className="form-label">Previsualización de Imagen</label>
+                  <img src={values.imagen} alt="Previsualización" style={{ width: "100%", height: "auto" }} />
+                </div>
+              )}
             </form>
           </Modal.Body>
           <Modal.Footer>
@@ -152,6 +182,7 @@ function ViewCalificaciones() {
             <th scope="col">Nombre</th>
             <th scope="col">Apellidos</th>
             <th scope="col">Curp</th>
+            <th scope="col">Imagen</th>
             <th scope="col">Modificar</th>
             <th scope="col">Eliminar</th>
           </tr>
@@ -164,6 +195,9 @@ function ViewCalificaciones() {
               <td>{values.nombre}</td>
               <td>{values.apellidos}</td>
               <td>{values.curp}</td>
+              <td>
+                {values.imagen && <img src={values.imagen} alt="Estudiante" style={{ width: "50px", height: "50px", objectFit: "cover" }} />}
+              </td>
               <td>
                 <button
                   type="button"
