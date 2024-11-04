@@ -1,4 +1,4 @@
-const Informacion = [{
+export const Informacion = [{
     matricula:"20e20106",
     nombre: "Yaki",
     apellidos: "Cruz",
@@ -15,7 +15,5 @@ const Informacion = [{
     nombre: "Luis",
     apellidos: "Cabrera",
     curp: "LUISCURP"
-},
+}
 ]
-
-export default Informacion;

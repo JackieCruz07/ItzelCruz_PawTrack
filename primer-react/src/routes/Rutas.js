@@ -7,7 +7,7 @@ import Catalog from "../components/inicio/Catalog";
 import ViewMascotas from "../components/Mascotas/ViewMascotas";
 import ViewInformacion from '../components/Gestion/ViewInformacion';
 
-import Informacion from "../bd/Datos";
+import ViewCalificaciones from '../components/Calificaciones/ViewCalificaciones';
 
 
 
@@ -21,7 +21,7 @@ function Rutas({ pacientes, setPacientes }) {
       <Route path="/ViewMascotas" element={<ViewMascotas pacientes={pacientes} />} />
       <Route path="/ViewInformacion" element={<ViewInformacion setPacientes={setPacientes} pacientes={pacientes} />} />
 
-      <Route path="/ViewCalificaciones" element={<Informacion />} />
+      <Route path='/Calificaciones' element={<ViewCalificaciones/>}/>
 
     </Routes>
   );

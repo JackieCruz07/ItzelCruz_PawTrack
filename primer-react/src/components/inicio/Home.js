@@ -10,7 +10,7 @@ function Home() {
    <Header/>
    <button><Link className="boton" to='../ViewMascotas'>Ver Mascotas</Link></button>
    <button><Link className="boton" to='../ViewInformacion'>Gestionar</Link></button>
-   <button><Link className="boton" to='/ViewCalificaciones'>Calificaciones</Link></button>
+   <button><Link className="boton" to='/Calificaciones'>Calificaciones</Link></button>
    <Footer/>
   </div>
   );
