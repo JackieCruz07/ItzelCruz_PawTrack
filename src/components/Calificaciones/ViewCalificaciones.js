@@ -5,20 +5,20 @@ import { Button, Modal } from "react-bootstrap";
 function ViewCalificaciones() {
   const [info, setInfo] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(null); // Para manejar el índice de edición
+  const [editingIndex, setEditingIndex] = useState(null);
   const [values, setValues] = useState({
     matricula: '',
     nombre: "",
     apellidos: '',
     curp: '',
-    imagen: null // Nueva propiedad para almacenar la imagen
+    imagen: null
   });
 
   const abrirModal = () => setShowModal(true);
   const cerrarModal = () => {
     setShowModal(false);
-    setEditingIndex(null); // Resetear el índice cuando cerramos el modal
-    setValues({ matricula: '', nombre: "", apellidos: '', curp: '', imagen: null }); // Limpiar el formulario
+    setEditingIndex(null);
+    setValues({ matricula: '', nombre: "", apellidos: '', curp: '', imagen: null });
   };
 
   const obtenerValues = (e) => {
@@ -30,40 +30,39 @@ function ViewCalificaciones() {
   const obtenerImagen = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file); // Crear una URL de la imagen cargada
+      const imageUrl = URL.createObjectURL(file);
       setValues({ ...values, imagen: imageUrl });
     }
   };
 
   const guardarInformacion = () => {
     if (editingIndex !== null) {
-      // Si estamos en modo de edición, actualizar el estudiante existente
+
       Informacion[editingIndex] = values;
       console.log(`Estudiante editado en índice ${editingIndex}`);
-    } else {
-      // Si no estamos editando, agregar un nuevo estudiante
+
       Informacion.push(values);
       console.log("Estudiante agregado");
     }
 
-    mostrarInfo(); // Actualizar la lista de estudiantes
-    cerrarModal(); // Cerrar el modal después de guardar
+    mostrarInfo();
+    cerrarModal();
   };
 
   const mostrarInfo = () => {
-    setInfo([...Informacion]); // Actualiza el estado con una copia del arreglo actual
+    setInfo([...Informacion]);
   };
 
   const eliminarInfo = (index) => {
-    Informacion.splice(index, 1); // Eliminar el estudiante en el índice especificado
+    Informacion.splice(index, 1);
     console.log("Estudiante eliminado en índice", index);
     mostrarInfo();
   };
 
   const editarInfo = (index) => {
-    setEditingIndex(index); // Establecer el índice del estudiante que estamos editando
-    setValues(Informacion[index]); // Cargar los valores del estudiante en el formulario
-    abrirModal(); // Abrir el modal para editar
+    setEditingIndex(index);
+    setValues(Informacion[index]);
+    abrirModal();
   };
 
   useEffect(() => {
