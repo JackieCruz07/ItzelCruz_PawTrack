@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Informacion } from "../../bd/Datos";
 import { Button, Modal } from "react-bootstrap";
-
+//ADAPTAR AUN
 function ViewCalificaciones() {
   const [info, setInfo] = useState([]);
   const [showModal, setShowModal] = useState(false);
