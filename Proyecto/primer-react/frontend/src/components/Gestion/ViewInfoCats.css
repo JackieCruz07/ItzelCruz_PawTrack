@@ -1,0 +1,40 @@
+.footer-container {
+
+  h1 {
+    font-size: xx-large;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.table thead th {
+  background-color: palevioletred;
+  color: #fff;
+}
+
+.btn-info {
+  margin-top: 10px;
+  color: #fff;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.btn-warning {
+  margin: 5px;
+
+}
+
+.btn-danger{
+  margin: 5px;
+}
+
+img.img-thumbnail {
+  display: block;
+  margin: 0 auto;
+}
+}

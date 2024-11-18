@@ -1,0 +1,31 @@
+{
+  "name": "proyecto",
+  "version": "1.0.0",
+  "main": "index.js",
+  "homepage": "https://JackieCruz07.github.io/EstructuraDeDatos_Itzel-Cruz",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "keywords": [
+    "cors",
+    "express",
+    "nodemon",
+    "parserJson"
+  ],
+  "author": "Itzel",
+  "license": "ISC",
+  "description": "Servidor para la prueba de formulario",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "parsejson": "^0.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+
+}
