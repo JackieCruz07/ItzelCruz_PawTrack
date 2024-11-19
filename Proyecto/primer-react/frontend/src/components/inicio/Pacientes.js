@@ -17,7 +17,7 @@ function Menu() {
             paddingTop: "30px",
           }}
         >
-          ¿Qué Pacientes Te Interesan?
+          ¿Qué Pacientes Te Interesan Ver?
         </h1>
         <div class="wrap">
           <div class="box">

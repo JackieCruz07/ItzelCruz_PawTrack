@@ -32,14 +32,13 @@ function About() {
           <p style={{ textAlign: "justify" }}>
             PawTrack es una plataforma integral diseñada para mejorar la gestión
             de clínicas veterinarias. Ofrecemos un sistema intuitivo que permite
-            llevar un registro detallado de cada mascota, desde sus visitas hasta
-            sus necesidades de salud específicas. Con PawTrack, las veterinarias
+            llevar un registro detallado de cada mascota. Con PawTrack, las veterinarias
             pueden organizar mejor su tiempo, aumentar la eficiencia y brindar
-            un servicio más personalizado y de alta calidad.
+            un servicio de alta calidad.
           </p>
           <p style={{ textAlign: "justify" }}>
             Nuestro objetivo es revolucionar la atención veterinaria mediante el
-            uso de tecnología avanzada, proporcionando una solución todo-en-uno
+            uso de tecnología avanzada, proporcionando una solución
             que facilita tanto a los médicos veterinarios como a los dueños de
             mascotas, gestionando de manera eficaz el bienestar de los animales.
           </p>

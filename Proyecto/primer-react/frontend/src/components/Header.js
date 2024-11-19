@@ -17,9 +17,11 @@ function Header() {
 
     // Filtra los datos
     const results = Informacion.filter(item =>
-      item.nombre.toLowerCase().includes(searchTerm.toLowerCase()) // Filtrar por nombre de la mascota
+      item.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.edad.toString().includes(searchTerm) || //(convertir la edad a string para la búsqueda)
+      item.especie.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
+    
     // Si se encuentran resultados, navega a la página de gatos con los resultados
     if (results.length > 0) {
       navigate("/ViewCats", { state: { pacientes: results } });
@@ -57,7 +59,7 @@ function Header() {
                 <li><a className="dropdown-item" href="/ViewMascotas/Exoticos">Exóticos</a></li>
               </ul>
             </div>
-            <Nav.Link href="/ViewInformacion" className="d-flex align-items-center mx-2">
+            <Nav.Link href="/Pacientes" className="d-flex align-items-center mx-2">
               <FaTools className="me-1" /> Gestión
             </Nav.Link>
             <Nav.Link href="/contact" className="d-flex align-items-center mx-2">
@@ -83,7 +85,7 @@ function Header() {
                   color: "#fff",
                   borderRadius: "0"
                 }}
-                type="submit" // Envía el formulario
+                type="submit"
               >
                 Buscar
               </Button>
