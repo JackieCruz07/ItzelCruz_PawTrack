@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Pets from "../img/pets.jpg";
-//import './Home.css';
 
 function Home() {
   return (
