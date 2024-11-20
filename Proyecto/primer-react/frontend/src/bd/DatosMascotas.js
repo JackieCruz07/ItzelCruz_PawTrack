@@ -14,13 +14,13 @@ export const Informacion = [{
     nombre: 'Galileo',
     especie: 'Gato',
     raza: 'Criollo',
-    fechaNacimiento: '01/04/2019',
+    fechaNacimiento: '01/04/2021',
     edad: '3 años',
     diagnosticos: 'Gripa',
     tratamientosPrevios: 'Ninguno',
     vacunas: 'Ninguna',
     alergias: 'Ninguna',
-    imagen: require('../components/img/cat1.jpg')
+    imagen: require('../components/img/cat12.jpg')
 },
 {
     nombre: 'Félix',

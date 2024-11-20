@@ -1,4 +1,4 @@
-let Informacion=[{
+/* let Informacion=[{
     matricula:"230023er",
     nombre:'Juan',
     apellidos:'Perez',
@@ -18,4 +18,4 @@ let Informacion=[{
 }
 ]
 
-module.exports= Informacion;
+module.exports= Informacion; */

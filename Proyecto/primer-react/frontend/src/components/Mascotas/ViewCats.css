@@ -11,8 +11,17 @@ padding-top: 0px;
 .card-columns {
   column-count: 3;
 }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+}
 
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-height: 350px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

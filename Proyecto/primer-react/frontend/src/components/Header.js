@@ -19,7 +19,8 @@ function Header() {
     const results = Informacion.filter(item =>
       item.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.edad.toString().includes(searchTerm) || //(convertir la edad a string para la búsqueda)
-      item.especie.toLowerCase().includes(searchTerm.toLowerCase())
+      item.especie.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.raza.toLowerCase().includes(searchTerm.toLowerCase())
     );
     
     // Si se encuentran resultados, navega a la página de gatos con los resultados
