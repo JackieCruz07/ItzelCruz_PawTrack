@@ -3,8 +3,9 @@ import { Informacion } from "../../bd/DatosMascotas";
 import { Button, Modal } from "react-bootstrap";
 import "./ViewInfoCats.css";
 
-function ViewInfoCats({ setPacientes, pacientes }) {
-  const [info, setInfo] = useState([]);
+function ViewInfoCats({ setPacientes }) {
+  const [pets, setPets] = useState([]);
+  //const [info, setInfo] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [values, setValues] = useState({
@@ -19,6 +20,14 @@ function ViewInfoCats({ setPacientes, pacientes }) {
     alergias: "",
     imagen: "",
   });
+
+  useEffect(() => {
+    // Hacer una petición a la API
+    fetch('http://localhost:5000/api/pets')
+      .then((response) => response.json())
+      .then((data) => setPets(data))
+      .catch((error) => console.error('Error fetching pets:', error));
+  }, []);
 
   const abrirModal = () => setShowModal(true);
   const cerrarModal = () => {
@@ -88,7 +97,7 @@ function ViewInfoCats({ setPacientes, pacientes }) {
     } else {
       Informacion.push(values);
     }
-    console.log(Informacion); // Verifica el contenido de Informacion después de guardar
+    console.log(Informacion);
     mostrarInfo();
     cerrarModal();
   };
@@ -101,7 +110,7 @@ function ViewInfoCats({ setPacientes, pacientes }) {
 
   const mostrarInfo = useCallback(() => {
     console.log(Informacion); // Verifica que la información esté siendo actualizada
-    setInfo([...Informacion]);
+    setPets([...Informacion]);
     setPacientes([...Informacion]); // Actualización global
   }, [setPacientes]);
 
@@ -340,22 +349,22 @@ function ViewInfoCats({ setPacientes, pacientes }) {
             </tr>
           </thead>
           <tbody>
-            {info.map((paciente, index) => (
-              <tr key={index}>
+            {pets.map((pets, index) => (
+              <tr key={`pets-${index}`}>
                 <th scope="row">{index + 1}</th>
-                <td>{paciente.nombre}</td>
-                <td>{paciente.especie}</td>
-                <td>{paciente.raza}</td>
-                <td>{paciente.fechaNacimiento}</td>
-                <td>{paciente.edad}</td>
-                <td>{paciente.diagnosticos}</td>
-                <td>{paciente.tratamientosPrevios}</td>
-                <td>{paciente.vacunas}</td>
-                <td>{paciente.alergias}</td>
+                <td>{pets.nombre}</td>
+                <td>{pets.especie}</td>
+                <td>{pets.raza}</td>
+                <td>{pets.fechaNacimiento}</td>
+                <td>{pets.edad}</td>
+                <td>{pets.diagnosticos}</td>
+                <td>{pets.tratamientosPrevios}</td>
+                <td>{pets.vacunas}</td>
+                <td>{pets.alergias}</td>
                 <td>
-                  {paciente.imagen && (
+                  {pets.imagen && (
                     <img
-                      src={paciente.imagen}
+                      src={pets.imagen}
                       alt="Mascota"
                       style={{ width: "50px", height: "50px" }}
                     />

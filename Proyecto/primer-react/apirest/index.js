@@ -1,40 +1,43 @@
-const express=require("express");
-const bodyparser=require("body-parser");
-const cors=require("cors");
+const express = require("express");
+const bodyparser = require("body-parser");
+const cors = require("cors");
 
-const informacion= require('./bd/DatosPet');
+let DatosPet = require('./bd/DatosPet');
 
+const app = express();
+const port = 4000;
 
-const app=express();
-const port=4000;
-
-app.use(bodyparser.urlencoded({extended:true}));
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 app.use(cors());
 
-app.get("/mensaje",(req,res)=>{
-    res.send("Servidor ejecutado")
-})
-
-app.post("/guardar",(req,res)=>{
-    try {
-        //const {nombre}=req.body;
-    console.log(req.body);
-    } catch (error) {
-        console.log(error.message);   
-    }
+app.get("/mensaje", (req, res) => {
+    res.send("Servidor ejecutado");
 });
 
-app.get("/filtro",(req,res)=>{
-    //const {nombre,apellidos}=req.body;
-    const filtro=informacion.filter(datos=>{
-        return datos.nombre.includes("D");
-    })
+// Endpoint para obtener datos de mascotas
+app.get('/api/pets', (req, res) => {
+    res.json(DatosPet); // Responde con los datos
+  });
+
+/* app.post("/api/pacientes", (req, res) => {
+    try {
+        DatosPet = req.body;
+        res.json(DatosPet);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Error actualizando los pacientes");
+    }
+}); */
+
+app.get("/filtro", (req, res) => {
+  //const {nombre,apellidos}=req.body;
+    const filtro = DatosPet.filter(datos => {
+        return datos.nombre.includes("G");
+    });
     res.send(filtro);
-})
+});
 
-
-
-app.listen(port,()=>{
-    console.log("Servidor ejecutado en el puerto 4000");
+app.listen(port, () => {
+    console.log(`Servidor ejecutado en el puerto ${port}`);
 });
