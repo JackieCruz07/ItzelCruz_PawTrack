@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Informacion } from "../../bd/DatosMascotas";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
+//import { v4 as uuidv4 } from "uuid";
 import "./ViewInfoCats.css";
 
-function ViewInfoCats({ setPacientes }) {
+function ViewInfoCats() {
+  // eslint-disable-next-line no-unused-vars
   const [pets, setPets] = useState([]);
-  //const [info, setInfo] = useState([]);
+  //const [filterValue, setFilterValue] = useState("");
+  const [filteredPets, setFilteredPets] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(null);
+  const [editingPet, setEditingPet] = useState(null);
+
   const [values, setValues] = useState({
     nombre: "",
+    dueño: "",
     especie: "",
     raza: "",
     fechaNacimiento: "",
@@ -21,20 +25,34 @@ function ViewInfoCats({ setPacientes }) {
     imagen: "",
   });
 
+  // Función para obtener los datos desde la API
+  const fetchPets = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/pets");
+      const data = await response.json();
+      setPets(data);
+      setFilteredPets(data);
+    } catch (error) {
+      console.error("Error fetching pets:", error);
+    }
+  };
+
   useEffect(() => {
-    // Hacer una petición a la API
-    fetch('http://localhost:5000/api/pets')
-      .then((response) => response.json())
-      .then((data) => setPets(data))
-      .catch((error) => console.error('Error fetching pets:', error));
+    fetchPets();
   }, []);
 
   const abrirModal = () => setShowModal(true);
+
   const cerrarModal = () => {
     setShowModal(false);
-    setEditingIndex(null);
+    setEditingPet(null);
+    resetFormValues();
+  };
+
+  const resetFormValues = () => {
     setValues({
       nombre: "",
+      dueño: "",
       especie: "",
       raza: "",
       fechaNacimiento: "",
@@ -48,9 +66,8 @@ function ViewInfoCats({ setPacientes }) {
   };
 
   const obtenerValues = (e) => {
-    e.preventDefault();
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    setValues((prev) => ({ ...prev, [name]: value }));
 
     if (name === "fechaNacimiento") {
       calcularEdad(value);
@@ -67,93 +84,141 @@ function ViewInfoCats({ setPacientes }) {
       edad--;
     }
 
-    setValues((prevValues) => ({ ...prevValues, edad: edad.toString() }));
+    setValues((prev) => ({ ...prev, edad: `${edad} años` }));
   };
 
   const obtenerImagen = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const formData = new FormData();
+      formData.append("imagen", file);
+
       const imageUrl = URL.createObjectURL(file);
-      setValues({ ...values, imagen: imageUrl });
+      setValues((prev) => ({ ...prev, imagen: imageUrl }));
+
+      subirImagen(formData);
     }
   };
 
-  /*   const guardarInformacion = () => {
-    if (editingIndex !== null) {
-      Informacion[editingIndex] = values;
-      console.log(`Paciente editado en índice ${editingIndex}`);
-    } else {
-      Informacion.push(values);
-      console.log("Paciente agregado");
-    }
+  const subirImagen = async (formData) => {
+    try {
+      const response = await fetch("http://localhost:4000/api/pets/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    mostrarInfo();
-    cerrarModal();
-  }; */
-
-  const guardarInformacion = () => {
-    if (editingIndex !== null) {
-      Informacion[editingIndex] = values;
-    } else {
-      Informacion.push(values);
+      if (response.ok) {
+        const data = await response.json();
+        setValues((prev) => ({
+          ...prev,
+          imagen: data.file ? `/uploads/${data.file.filename}` : prev.imagen,
+        }));
+      } else {
+        console.error("Error al subir la imagen");
+      }
+    } catch (error) {
+      console.error("Error al procesar la subida de imagen:", error);
     }
-    console.log(Informacion);
-    mostrarInfo();
-    cerrarModal();
   };
 
-  /*   const mostrarInfo = useCallback(() => {
-    setInfo([...Informacion]);
-    //setPacientes es el actualizador global el cual esta declarado en App.js
-    setPacientes([...Informacion]);
-  }, [setPacientes]); */
+  const guardarInformacion = async () => {
+    try {
+      const endpoint = editingPet
+        ? `http://localhost:4000/api/pets/${editingPet.id}`
+        : "http://localhost:4000/api/pets";
 
-  const mostrarInfo = useCallback(() => {
-    console.log(Informacion); // Verifica que la información esté siendo actualizada
-    setPets([...Informacion]);
-    setPacientes([...Informacion]); // Actualización global
-  }, [setPacientes]);
+      const method = editingPet ? "PUT" : "POST";
 
-  const eliminarInfo = (index) => {
-    Informacion.splice(index, 1);
-    console.log("Paciente eliminado en índice", index);
-    mostrarInfo();
+      const response = await fetch(endpoint, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          id: editingPet ? editingPet.id : undefined,
+        }),
+      });
+
+      if (response.ok) {
+        fetchPets();
+        cerrarModal();
+      } else {
+        console.error("Error al guardar los datos");
+      }
+    } catch (error) {
+      console.error("Error al guardar la información:", error);
+    }
   };
 
-  const editarInfo = (index) => {
-    setEditingIndex(index);
-    setValues(Informacion[index]);
+  const editarPet = (pet) => {
+    setEditingPet(pet);
+    setValues({
+      nombre: pet.nombre,
+      dueño: pet.dueño,
+      especie: pet.especie,
+      raza: pet.raza,
+      fechaNacimiento: pet.fechaNacimiento,
+      edad: pet.edad,
+      diagnosticos: pet.diagnosticos,
+      tratamientosPrevios: pet.tratamientosPrevios,
+      vacunas: pet.vacunas,
+      alergias: pet.alergias,
+      imagen: pet.imagen,
+    });
     abrirModal();
   };
 
-  useEffect(() => {
-    mostrarInfo();
-  }, [mostrarInfo]);
+  const eliminarPet = async (petId) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/pets/${petId}`, {
+        method: "DELETE",
+      });
 
-  /* useEffect(() => {
-    setInfo(pacientes);
-  }, [pacientes]);*/
+      if (response.ok) {
+        fetchPets();
+      } else {
+        console.error("Error al eliminar la mascota");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud DELETE:", error);
+    }
+  };
+
+  /*   // Función para aplicar filtros
+  const aplicarFiltro = (e) => {
+    const filtro = e.target.value.toLowerCase();
+    setFilterValue(filtro);
+
+    const resultado = pets.filter(
+      (pet) =>
+        pet.nombre.toLowerCase().includes(filtro) ||
+        pet.dueño.toLowerCase().includes(filtro) ||
+        pet.especie.toLowerCase().includes(filtro)
+    );
+
+    setFilteredPets(resultado);
+  }; */
 
   return (
     <>
-      <br></br>
       <div className="footer-container">
         <h1 className="Titulo">Gestiona Tus Michi Pacientes</h1>
         <div className="row">
-          <div style={{ width: "100%" }}>
-            <Button
-              type="button"
-              className="btn btn-info w-100"
-              onClick={abrirModal}
-            >
+          <div className="mb-3">
+            <Button className="btn btn-info w-100" onClick={abrirModal}>
               Agregar Micho...
             </Button>
           </div>
-
+          {/*           <input
+            type="text"
+            placeholder="Buscar por nombre, dueño o especie"
+            className="form-control mb-3"
+            value={filterValue}
+            onChange={aplicarFiltro}
+          /> */}
           <Modal show={showModal} onHide={cerrarModal}>
             <Modal.Header closeButton>
               <Modal.Title>
-                {editingIndex !== null ? "Editar Paciente" : "Agregar Paciente"}
+                {editingPet ? "Editar Paciente" : "Agregar Paciente"}
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -174,6 +239,21 @@ function ViewInfoCats({ setPacientes }) {
                 </div>
 
                 <div className="mb-3">
+                  <label htmlFor="dueñoInput" className="form-label">
+                    Dueño
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="dueñoInput"
+                    placeholder="Nombre del dueño"
+                    name="dueño"
+                    onChange={obtenerValues}
+                    value={values.dueño}
+                  />
+                </div>
+
+                <div className="mb-3">
                   <label htmlFor="especieInput" className="form-label">
                     Especie
                   </label>
@@ -181,7 +261,7 @@ function ViewInfoCats({ setPacientes }) {
                     type="text"
                     className="form-control"
                     id="especieInput"
-                    placeholder="Especie (e.g., perro, gato)"
+                    placeholder="Especie (e.g. gato)"
                     name="especie"
                     onChange={obtenerValues}
                     value={values.especie}
@@ -295,12 +375,13 @@ function ViewInfoCats({ setPacientes }) {
 
                 <div className="mb-3">
                   <label htmlFor="imagenInput" className="form-label">
-                    Imagen de la Mascota
+                    Imagen de la mascota
                   </label>
                   <input
                     type="file"
                     className="form-control"
                     id="imagenInput"
+                    name="imagen"
                     onChange={obtenerImagen}
                   />
                 </div>
@@ -311,7 +392,7 @@ function ViewInfoCats({ setPacientes }) {
                       Previsualización de Imagen
                     </label>
                     <img
-                      src={values.imagen}
+                      src={`http://localhost:4000${values.imagen}`}
                       alt="Previsualización"
                       style={{ width: "100%", height: "auto" }}
                     />
@@ -324,7 +405,7 @@ function ViewInfoCats({ setPacientes }) {
                 Cerrar
               </Button>
               <Button variant="primary" onClick={guardarInformacion}>
-                {editingIndex !== null ? "Guardar Cambios" : "Guardar"}
+                {editingPet ? "Guardar Cambios" : "Guardar"}
               </Button>
             </Modal.Footer>
           </Modal>
@@ -335,6 +416,7 @@ function ViewInfoCats({ setPacientes }) {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
+              <th scope="col">Dueño</th>
               <th scope="col">Especie</th>
               <th scope="col">Raza</th>
               <th scope="col">Fecha de Nacimiento</th>
@@ -349,47 +431,54 @@ function ViewInfoCats({ setPacientes }) {
             </tr>
           </thead>
           <tbody>
-            {pets.map((pets, index) => (
-              <tr key={`pets-${index}`}>
-                <th scope="row">{index + 1}</th>
-                <td>{pets.nombre}</td>
-                <td>{pets.especie}</td>
-                <td>{pets.raza}</td>
-                <td>{pets.fechaNacimiento}</td>
-                <td>{pets.edad}</td>
-                <td>{pets.diagnosticos}</td>
-                <td>{pets.tratamientosPrevios}</td>
-                <td>{pets.vacunas}</td>
-                <td>{pets.alergias}</td>
-                <td>
-                  {pets.imagen && (
-                    <img
-                      src={pets.imagen}
-                      alt="Mascota"
-                      style={{ width: "50px", height: "50px" }}
-                    />
-                  )}
-                </td>
-                <td>
-                  <Button
-                    type="button"
-                    className="btn btn-warning"
-                    onClick={() => editarInfo(index)}
-                  >
-                    <i className="bi bi-pencil-fill"></i>
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => eliminarInfo(index)}
-                  >
-                    <i className="bi bi-trash-fill"></i>
-                  </Button>
-                </td>
+            {filteredPets.length === 0 ? (
+              <tr>
+                <td colSpan="14">No hay mascotas disponibles.</td>
               </tr>
-            ))}
+            ) : (
+              filteredPets.map((pet, index) => (
+                <tr key={pet.id}>
+                  <td>{index + 1}</td>
+                  <td>{pet.nombre}</td>
+                  <td>{pet.dueño}</td>
+                  <td>{pet.especie}</td>
+                  <td>{pet.raza}</td>
+                  <td>{pet.fechaNacimiento}</td>
+                  <td>{pet.edad}</td>
+                  <td>{pet.diagnosticos}</td>
+                  <td>{pet.tratamientosPrevios}</td>
+                  <td>{pet.vacunas}</td>
+                  <td>{pet.alergias}</td>
+                  <td>
+                    {pet.imagen && (
+                      <img
+                      src={`http://localhost:4000${pet.imagen}`}
+                        alt={pet.nombre}
+                        style={{ width: "50px", height: "50px" }}
+                      />
+                    )}
+                  </td>
+                  <td>
+                    <Button
+                      type="button"
+                      className="btn btn-warning"
+                      onClick={() => editarPet(pet)}
+                    >
+                      <i className="bi bi-pencil-fill"></i>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => eliminarPet(pet.id)}
+                    >
+                      <i className="bi bi-trash-fill"></i>
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

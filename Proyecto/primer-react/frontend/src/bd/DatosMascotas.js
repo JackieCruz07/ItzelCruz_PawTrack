@@ -1,5 +1,6 @@
 export const Informacion = [{
     nombre: 'Polo',
+    Dueño: 'Jackie',
     especie: 'Gato',
     raza: 'Criollo',
     fechaNacimiento: '01/04/2022',
@@ -12,6 +13,7 @@ export const Informacion = [{
 },
 {
     nombre: 'Galileo',
+    Dueño: 'Jose',
     especie: 'Gato',
     raza: 'Criollo',
     fechaNacimiento: '01/04/2021',
@@ -23,7 +25,8 @@ export const Informacion = [{
     imagen: require('../components/img/cat12.jpg')
 },
 {
-    nombre: 'Félix',
+    nombre: 'Felix',
+    Dueño: 'Jose',
     especie: 'Gato',
     raza: 'Criollo',
     fechaNacimiento: '01/04/2022',
