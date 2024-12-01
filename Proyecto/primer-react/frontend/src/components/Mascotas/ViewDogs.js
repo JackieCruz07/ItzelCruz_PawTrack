@@ -1,11 +1,12 @@
 import React from 'react';
 import ViewPets from './ViewPets';
 
-function ViewCats() {
+function ViewDogs() {
   return <ViewPets 
-    petType="cats" 
-    title="Michi Pacientes" 
+    petType="dogs" 
+    title="Pacientes Perrunos" 
     cardView={true}
   />;
 }
-export default ViewCats;
+
+export default ViewDogs;

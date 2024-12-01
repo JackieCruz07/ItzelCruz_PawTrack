@@ -6,21 +6,21 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
-  const [pacientes, setPacientes] = useState([]);
+  const [pets, setPets] = useState([]);
 
    // Guardar pacientes en localStorage cada vez que cambien
    useEffect(() => {
-    if (pacientes && pacientes.length > 0) {
-      localStorage.setItem("pacientes", JSON.stringify(pacientes)); // Guarda los pacientes en localStorage
+    if (pets && pets.length > 0) {
+      localStorage.setItem("pacientes", JSON.stringify(pets)); // Guarda los pacientes en localStorage
     }
-  }, [pacientes]);
+  }, [pets]);
 
   return (
     <Router>
       <Header />
       <div className="footer-container">
         <div className="container-fluid">
-          <Rutas pacientes={pacientes} setPacientes={setPacientes} />
+          <Rutas pets={pets} setPets={setPets} />
         </div>
       </div>
       <Footer />

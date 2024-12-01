@@ -1,13 +1,13 @@
 import React from 'react';
 import ViewInfoPets from './ViewInfoPets';
 
-function ViewInfoCats() {
+function ViewInfoDogs() {
   return (
     <ViewInfoPets 
-      petType="cats" 
-      title="Registro de Gatos" 
+      petType="dogs" 
+      title="Registro de Perros" 
     />
   );
 }
 
-export default ViewInfoCats;
+export default ViewInfoDogs;

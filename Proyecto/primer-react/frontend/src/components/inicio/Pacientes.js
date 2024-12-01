@@ -29,7 +29,7 @@ function Menu() {
               </div>
               <p class="description">De todas las razas</p>
             </div>
-            <Link className="button" to="Home">
+            <Link className="button" to="/HomeDogs">
               Ver más...
             </Link>
           </div>
@@ -55,7 +55,7 @@ function Menu() {
               </div>
               <p class="description">Desde loros hasta iguanas...</p>
             </div>
-            <Link className="button" to="Home">
+            <Link className="button" to="/HomeExotics">
               Ver más...
             </Link>
           </div>
