@@ -1,0 +1,106 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.appointments-container {
+  .page-title {
+    color: $primary;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      //background-color: $primary;
+      border-radius: $border-radius;
+    }
+  }
+
+  .nav-tabs {
+    border-bottom: 2px solid $gray-200;
+    margin-bottom: 2rem;
+
+    .nav-link {
+      border: none;
+      color: $gray-600;
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+
+      &:hover {
+        color: $primary;
+        background-color: rgba($primary, 0.1);
+      }
+
+      &.active {
+        color: $primary;
+        background-color: transparent;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: $primary;
+        }
+      }
+
+      i {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .calendar-card {
+    background: $white;
+    border-radius: $border-radius-lg;
+    box-shadow: $box-shadow-sm;
+    margin-bottom: 2rem;
+
+    .calendar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid $gray-200;
+
+      .date-display {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: $gray-700;
+      }
+
+      .btn-group {
+        .btn {
+          padding: 0.25rem 0.5rem;
+          font-size: 0.875rem;
+
+          &:hover {
+            transform: translateY(-1px);
+          }
+
+          &.btn-today {
+            background-color: $primary;
+            border-color: $primary;
+            color: $white;
+            padding-left: 1rem;
+            padding-right: 1rem;
+
+            &:hover {
+              background-color: darken($primary, 5%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .appointments-list {
+    padding: 1.5rem;
+  }
+}

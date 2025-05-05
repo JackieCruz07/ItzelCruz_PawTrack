@@ -1,229 +1,35 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const path = require("path");
-const multer = require("multer");
-const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
+const mongoose = require("mongoose");
+const app = require("./App");
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
+  DB_PORT,
+  IP_SERVER,
+} = require("./constantes");
 
-const uploadPath = path.join(__dirname, "uploads");
+const port = process.env.PORT || 4000;
 
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath);
-}
+// Configuración de Mongoose
+const uri = `mongodb://${IP_SERVER}:${DB_PORT}/${DB_NAME}`;
+mongoose.set("strictQuery", false);
 
-let DatosPet = require("./bd/DatosPet.js");
-
-const app = express();
-const port = 4000;
-
-// Configuraciones de middleware
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// CORS flexible
-const corsOptions = {
-  origin: "*", // solicitudes desde cualquier origen
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-app.use(cors(corsOptions));
-
-// Middleware de logging para depuración
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-  next();
-});
-
-// Endpoint de prueba
-
-app.get("/mensaje", (req, res) => {
-  res.send("Servidor ejecutado correctamente");
-});
-
-// Endpoint para obtener mascotas categorizadas por especie
-app.get("/api/pets/categorized", (req, res) => {
-  try {
-    res.json(DatosPet); // Retorna el objeto categorizado
-  } catch (error) {
-    res.status(500).json({
-      message: "Error al obtener mascotas categorizadas",
-      error: error.message,
-    });
-  }
-});
-
-// Endpoint para obtener datos de mascotas
-app.get("/api/pets", (req, res) => {
-  try {
-    const { especie } = req.query;
-    if (especie) {
-      if (!DatosPet[especie]) {
-        return res.status(404).json({ message: "Especie no encontrada" });
-      }
-      return res.json(DatosPet[especie]);
-    }
-    res.json(DatosPet);
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener mascotas", error: error.message });
-  }
-});
-
-/* app.get("/api/pets", (req, res) => {
-  try {
-    // Filtrar por especie si se proporciona
-    const { especie } = req.query;
-    let filteredPets = DatosPet;
-
-    if (especie) {
-      // Convertir a minúsculas para comparación insensible a mayúsculas/minúsculas
-      filteredPets = DatosPet.filter(
-        (pet) => pet.especie.toLowerCase() === especie.toLowerCase()
-      );
-    }
-    // Añadimos un ID a cada mascota si no lo tiene
-    const petsWithId = DatosPet.map((pet) => ({
-      ...pet,
-      id: pet.id || uuidv4(),
-    }));
-    res.json(petsWithId);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener mascotas", error: error.message });
-  }
-}); */
-
-// Endpoint para agregar una nueva mascota
-app.post("/api/pets", (req, res) => {
-  try {
-    const {
-      nombre,
-      dueño,
-      especie,
-      raza,
-      fechaNacimiento,
-      edad,
-      diagnosticos,
-      tratamientosPrevios,
-      vacunas,
-      alergias,
-      imagen,
-    } = req.body;
-
-    if (!DatosPet[especie]) {
-      return res.status(400).json({ message: "Especie no válida" });
-    }
-
-    const newPet = {
-      id: uuidv4(),
-      nombre,
-      dueño,
-      especie,
-      raza,
-      fechaNacimiento,
-      edad,
-      diagnosticos,
-      tratamientosPrevios,
-      vacunas,
-      alergias,
-      imagen,
-    };
-
-    DatosPet[especie].push(newPet);
-    res.status(201).json(newPet);
-  } catch (error) {
-    res.status(500).json({ message: "Error al agregar mascota", error: error.message });
-  }
-});
-
-/*     DatosPet.push(newPet);
-    res.status(201).json(newPet);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al crear mascota", error: error.message });
-  }
-}); */
-
-// Endpoint para actualizar una mascota existente
-app.put("/api/pets/:id", (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedPet = req.body;
-
-    for (const category in DatosPet) {
-      const petIndex = DatosPet[category].findIndex((pet) => pet.id === id);
-      
-      if (petIndex !== -1) {
-        DatosPet[category][petIndex] = { ...DatosPet[category][petIndex], ...updatedPet };
-        return res.json(DatosPet[category][petIndex]);
-      }
-    }
-
-    return res.status(404).json({ message: "Mascota no encontrada" });
-  } catch (error) {
-    res.status(500).json({ message: "Error al actualizar mascota", error: error.message });
-  }
-});
-
-// Endpoint para eliminar una mascota
-app.delete("/api/pets/:id", (req, res) => {
-  try {
-    const { id } = req.params;
-
-    for (const category in DatosPet) {
-      const petIndex = DatosPet[category].findIndex((pet) => pet.id === id);
-      
-      if (petIndex !== -1) {
-        DatosPet[category].splice(petIndex, 1);
-        return res.status(200).json({ message: "Mascota eliminada con éxito" });
-      }
-    }
-
-    return res.status(404).json({ message: "Mascota no encontrada" });
-  } catch (error) {
-    res.status(500).json({ message: "Error al eliminar mascota", error: error.message });
-  }
-});
-
-// Configurar carpeta estática con control de caché
-app.use(
-  "/uploads",
-  express.static("uploads", {
-    etag: false,
-    maxAge: "0",
+// Conexión a MongoDB
+mongoose.connect(uri, {
+/*     useNewUrlParser: true,
+    useUnifiedTopology: true, */
   })
-);
-
-// Configuración de almacenamiento con multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const upload = multer({ storage });
-
-app.post("/api/pets/upload", upload.single("imagen"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: "No se subió ninguna imagen" });
-  }
-  res.json({
-    message: "Imagen subida con éxito",
-    file: {
-      filename: req.file.filename,
-      path: req.file.path,
-    },
-  });
-});
-
+  .then(() => console.log(`Conectado a MongoDB exitosamente en el puerto: ${DB_PORT}`))
+  .catch((err) => console.error("Error al conectar a MongoDB:", err.message))
+  
+// Arrancar el servidor Express
 app.listen(port, () => {
-  console.log(`Servidor ejecutado en el puerto ${port}`);
+  const currentTime = new Date().toLocaleString();
+  console.log("***************");
+  console.log("****API REST***");
+  console.log("***************");
+  console.log(`Servidor ejecutándose en http://127.0.0.1:${port}/api`);
+  console.log(`Hora de inicio: ${currentTime}`);
 });
 
-module.exports = app;
+module.exports = app

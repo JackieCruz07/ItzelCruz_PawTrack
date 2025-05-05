@@ -1,10 +1,9 @@
-const { v4: uuidv4 } = require("uuid");
+const path = require("path");
 
 let DatosPet = {
   // Cats
-  cats: [
+  Gato: [
     {
-      id: uuidv4(),
       nombre: "Polo",
       dueño: "Jackie",
       especie: "Gato",
@@ -15,10 +14,16 @@ let DatosPet = {
       tratamientosPrevios: "Antihistamínicos",
       vacunas: "Vacunado contra panleucopenia, herpesvirus y calicivirus.",
       alergias: "Polvo y polen",
-      imagen: "/uploads/cat.jpg",
+      imagen: `/uploads/img/Polo.jpg`,
+      documentos: [
+        {
+          url: `/uploads/documents/polo_historial.pdf`,
+          name: "Historial Médico",
+          type: "application/pdf",
+        },
+      ],
     },
     {
-      id: uuidv4(),
       nombre: "Galileo",
       dueño: "Jose",
       especie: "Gato",
@@ -29,43 +34,61 @@ let DatosPet = {
       tratamientosPrevios: "Limpieza dental y tratamiento con antibióticos.",
       vacunas: "Completas",
       alergias: "Ninguna conocida",
-      imagen: "/uploads/cat1.jpg",
+      imagen: `/uploads/img/Galileo.jpg`,
+      documentos: [
+        {
+          url: `/uploads/documents/gali_historial.pdf`,
+          name: "Historial Médico",
+          type: "application/pdf",
+        },
+      ],
     },
     {
-      id: uuidv4(),
       nombre: "Felix",
       dueño: "Jose",
       especie: "Gato",
       raza: "Criollo",
       fechaNacimiento: "2022-04-01",
-      edad: "1 años",
+      edad: "2 años",
       diagnosticos: "Giardiasis",
       tratamientosPrevios: "Desparasitante",
       vacunas: "Vacunado contra panleucopenia y rabia",
       alergias: "Ninguna conocida",
-      imagen: "/uploads/cat2.jpg",
+      imagen: `/uploads/img/Felix.jpg`,
+      documentos: [
+        {
+          url: `/uploads/documents/felix_historial.pdf`,
+          name: "Historial Médico",
+          type: "application/pdf",
+        },
+      ],
     },
     {
-      id: uuidv4(),
       nombre: "Buñuelo",
-      dueño: "Maria",
+      dueño: "Yuceli",
       especie: "Gato",
       raza: "Criollo",
-      fechaNacimiento: "2022-04-01",
+      fechaNacimiento: "2023-04-01",
       edad: "1 años",
       diagnosticos: "Obesidad leve",
       tratamientosPrevios: "Dieta controlada y aumento de actividad física",
       vacunas: "Completas",
       alergias: "Ninguna conocida",
-      imagen: "/uploads/cat3.jpg",
+      imagen: `/uploads/img/Buñuelo.jpg`,
+      documentos: [
+        {
+          url: `/uploads/documents/Buñu_historial.pdf`,
+          name: "Historial Médico",
+          type: "application/pdf",
+        },
+      ],
     },
   ],
   // Dogs
-  dogs: [
+  Perro: [
     {
-      id: uuidv4(),
       nombre: "Max",
-      dueño: "Carlos",
+      dueño: "Victor",
       especie: "Perro",
       raza: "Labrador",
       fechaNacimiento: "2020-06-15",
@@ -74,12 +97,18 @@ let DatosPet = {
       tratamientosPrevios: "Vacuna anual",
       vacunas: "Completas",
       alergias: "Ninguna conocida",
-      imagen: "/uploads/dog.jpg",
+      imagen: `/uploads/img/Max.jpg`,
+      documentos: [
+        {
+          url: `/uploads/documents/max_historial.pdf`,
+          name: "Historial Médico",
+          type: "application/pdf",
+        },
+      ],
     },
     {
-      id: uuidv4(),
       nombre: "Luna",
-      dueño: "Maria",
+      dueño: "Yuceli",
       especie: "Perro",
       raza: "Pastor Aleman",
       fechaNacimiento: "2021-03-10",
@@ -88,16 +117,21 @@ let DatosPet = {
       tratamientosPrevios: "Desparasitación",
       vacunas: "Completas",
       alergias: "Sensible a ciertos alimentos",
-      imagen: "/uploads/dog1.jpg",
+      imagen: `/uploads/img/Luna.jpg`,
+      documentos: [
+        {
+          url: `/uploads/documents/Luna_historial.pdf`,
+          name: "Historial Médico",
+          type: "application/pdf",
+        },
+      ],
     },
   ],
-
   // Exotic Pets
-  exotics: [
+  Exotico: [
     {
-      id: uuidv4(),
       nombre: "Rex",
-      dueño: "Pedro",
+      dueño: "Luis",
       especie: "Exotico",
       raza: "Huron",
       fechaNacimiento: "2022-01-20",
@@ -106,7 +140,14 @@ let DatosPet = {
       tratamientosPrevios: "Chequeo anual",
       vacunas: "Aplicadas",
       alergias: "Ninguna conocida",
-      imagen: "/uploads/exotic.jpg",
+      imagen: `/uploads/img/Rex.jpg`,
+      documentos: [
+        {
+          url: `/uploads/documents/rex_historial.pdf`,
+          name: "Historial Médico",
+          type: "application/pdf",
+        },
+      ],
     },
   ],
 };

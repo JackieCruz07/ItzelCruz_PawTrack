@@ -1,0 +1,398 @@
+/* Admin.css - Estilos para el módulo de administración */
+
+/* Variables de colores y estilos generales */
+:root {
+    --primary-color: #4a6fa5;
+    --primary-light: #e8f1ff;
+    --primary-dark: #375a87;
+    --accent-color: #47b475;
+    --accent-hover: #3a9961;
+    --danger-color: #e74c3c;
+    --danger-hover: #c0392b;
+    --warning-color: #f39c12;
+    --text-color: #333;
+    --text-light: #666;
+    --bg-color: #f9fafb;
+    --card-bg: #ffffff;
+    --border-color: #e0e5eb;
+    --success-color: #2ecc71;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --transition: all 0.3s ease;
+  }
+  
+  /* Contenedor principal del componente */
+  .user-management-container {
+    background-color: var(--bg-color);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Encabezado de sección */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  
+  .section-header h2 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  
+  /* Botón para agregar nuevo usuario */
+  .add-user-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .add-user-btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+  }
+  
+  .add-user-btn i {
+    font-size: 1.2rem;
+  }
+  
+  /* Mensaje de error */
+  .error-message {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--danger-color);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    border-left: 4px solid var(--danger-color);
+    display: flex;
+    align-items: center;
+  }
+  
+  .error-message::before {
+    content: "⚠️";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
+  
+  /* Tabla de usuarios */
+  .users-table-container {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+  }
+  
+  .users-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  
+  .users-table th {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .users-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+  }
+  
+  .users-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .users-table tr:hover {
+    background-color: rgba(74, 111, 165, 0.05);
+  }
+  
+  /* Fila del usuario actual */
+  .users-table tr.current-user {
+    background-color: var(--primary-light);
+  }
+  
+  .users-table tr.current-user:hover {
+    background-color: var(--primary-light);
+  }
+  
+  /* Estado del usuario */
+  .user-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  .user-status.active {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--success-color);
+  }
+  
+  .user-status.inactive {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--danger-color);
+  }
+  
+  /* Rol del usuario */
+  .user-role {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+  }
+  
+  .user-role.admin {
+    color: var(--primary-dark);
+  }
+  
+  .user-role.user {
+    color: var(--text-light);
+  }
+  
+  /* Botones de acción en la tabla */
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .edit-btn, .delete-btn {
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .edit-btn {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+  }
+  
+  .edit-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--danger-color);
+  }
+  
+  .delete-btn:hover {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  
+  /* Estado de carga */
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-light);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .loading::before {
+    content: "";
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid var(--primary-light);
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Mensaje de no datos */
+  .no-data {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-light);
+    font-weight: 500;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  /* Formularios */
+  .edit-form-container, .password-form-container {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+    border-top: 4px solid var(--primary-color);
+    max-width: 600px;
+  }
+  
+  .edit-form-container h3, .password-form-container h3 {
+    color: var(--primary-dark);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  
+  .user-form, .password-form {
+    display: grid;
+    gap: 1.2rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+  }
+  
+  .form-group input, .form-group select {
+    padding: 0.8rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+  
+  .form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+  }
+  
+  .form-group small {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  /* Checkbox personalizado */
+  .form-group.checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .form-group.checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+  }
+  
+  .form-group.checkbox input {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  }
+  
+  /* Botones de formulario */
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .save-btn, .password-btn, .cancel-btn {
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-size: 0.95rem;
+  }
+  
+  .save-btn {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background-color: var(--accent-hover);
+  }
+  
+  .password-btn {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .password-btn:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .cancel-btn {
+    background-color: #f1f2f6;
+    color: var(--text-light);
+  }
+  
+  .cancel-btn:hover {
+    background-color: #e0e5eb;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .user-management-container {
+      padding: 1rem;
+    }
+    
+    .users-table-container {
+      overflow-x: auto;
+    }
+    
+    .users-table {
+      min-width: 650px;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+    }
+    
+    .form-actions button {
+      width: 100%;
+    }
+  }

@@ -1,0 +1,57 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.appointment-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .status-badge {
+    font-size: 0.8rem;
+    padding: 0.5em 0.8em;
+  }
+
+  .appointment-details {
+    font-size: 0.9rem;
+    
+    p {
+      margin-bottom: 0.5rem;
+    }
+
+    strong {
+      color: $gray-700;
+    }
+  }
+
+  .btn {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  .card-title {
+    font-weight: 600;
+    color: $primary;
+  }
+
+  .card-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+// Responsive adjustments
+@include media-breakpoint-up(md) {
+  .appointment-card {
+    .btn {
+      font-size: 0.85rem;
+    }
+  }
+}

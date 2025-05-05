@@ -39,18 +39,32 @@ function Home() {
             funcionalidades de gestión avanzadas, te ayudamos a mantener el
             control y cuidado de las mascotas con facilidad.
           </p>
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px", display: "flex"}}>
             <Button
               variant="primary"
               style={{
                 padding: "10px 20px",
-                marginTop: "0px",
+                marginRight: "15px",
                 backgroundColor: "#2980b9",
                 border: "none",
               }}
             >
               <Link to="../Pacientes">
                 <b>Ver Pacientes</b>
+              </Link>
+            </Button>
+
+            <Button
+              variant="primary"
+              style={{
+                padding: "10px 20px",
+                marginRight: "15px",
+                backgroundColor: "#2980b9",
+                border: "none",
+              }}
+            >
+              <Link to="../Citas">
+                <b>Ver Citas</b>
               </Link>
             </Button>
           </div>

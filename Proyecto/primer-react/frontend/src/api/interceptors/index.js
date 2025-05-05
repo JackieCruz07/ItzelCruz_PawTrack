@@ -1,0 +1,1 @@
+export { default as AuthInterceptor } from "./auth.interceptor";

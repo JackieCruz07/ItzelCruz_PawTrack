@@ -1,0 +1,54 @@
+.pdf-viewer {
+    margin: 15px 0;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+  }
+  
+  .pdf-viewer .react-pdf__Document {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .pdf-viewer .react-pdf__Page {
+    margin: 1em 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: white;
+  }
+  
+  .pdf-viewer .react-pdf__Page__canvas {
+    max-width: 100%;
+    height: auto !important;
+  }
+  
+  .pdf-viewer .react-pdf__Page__textContent {
+    border: 1px solid darkgrey;
+    box-shadow: 5px 5px 5px 1px #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Document type icons */
+  .document-icon {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
+  
+  .document-icon.pdf {
+    color: #e53935;
+  }
+  
+  .document-icon.word {
+    color: #1565c0;
+  }
+  
+  .document-icon.image {
+    color: #43a047;
+  }
+  
+  .document-icon.other {
+    color: #757575;
+  }
